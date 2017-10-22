@@ -1,6 +1,6 @@
 {
   "name": "WTR for World of Warships Forum",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "manifest_version": 2,
   "description": "Colors players' nicknames based on their WRT ranking",
   "icons": {
@@ -8,7 +8,6 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  "default_locale": "en",
 "content_scripts": [{
     "matches": ["*://*.forum.worldofwarships.ru/topic/*"],
     "js": ["js/jquery-3.2.1.min.js", "js/content.js"],

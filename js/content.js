@@ -23,8 +23,15 @@ var setRaiting = function(){
     for(var playerName in contentMap) {
         var cachedStat = getFromCache(playerName);
 
-        if (cachedStat){
-            processStatistics(contentMap, cachedStat)
+        if (cachedStat && cachedStat.actualDate){
+            var timeDiff = Math.abs(new Date().getTime() - new Date(cachedStat.actualDate).getTime());
+            var updateTime = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            if (updateTime > 1){
+                loadStatistics(playerName, function(statFromServer){ processStatistics(contentMap, statFromServer)});
+            }
+            else{
+                processStatistics(contentMap, cachedStat);
+            }
         }
         else{
             loadStatistics(playerName, function(statFromServer){ processStatistics(contentMap, statFromServer)});
@@ -101,12 +108,13 @@ var loadStatistics = function(playerName, callback){
             var playerId = data.id;
             $.ajax({
                 type: "GET",
-                url: "https://api.ru.warships.today/api/player/" + playerId + "/saved",
+                url: "https://api.ru.warships.today/api/player/" + playerId + "/current",
                 success: function(response){
                     var stat = {};
                     if (response.intervals.length != 0){
                         stat = response.intervals[response.intervals.length - 1].subResultViews.pvp.overall.player.value;
                         stat.name = response.name;
+                        stat.actualDate = new Date().getTime();
                     }
 
                     setToCache(playerName, stat);
