@@ -1,4 +1,7 @@
 
+ga('create', 'UA-108484251-1', 'auto');
+ga('send', 'pageview');
+
 var setRaiting = function(){
     var contentMap = {};
     var items = $(".cAuthorPane_author a");
@@ -101,6 +104,8 @@ var setToCache = function(playerName, stat){
 }
 
 var loadStatistics = function(playerName, callback){
+    ga('send', 'event', 'loadStat', playerName);
+
     $.ajax({
         type: "GET",
         url: "https://api.ru.warships.today/api/players/search-by-name/" + playerName,
