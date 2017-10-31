@@ -12,10 +12,16 @@ var getVariables = function(){
     return{
         version: manifestData.version,
         settings: manifestData.settings,
+        minimalCacheVersion: manifestData.minimalCacheVersion,
     }
 }
 
 var variables = getVariables();
+
+
+var forceCacheUpdate = function(cache){
+    return !cache.version || cache.version < variables.minimalCacheVersion;
+}
 
 var WOWsExtention = function(){
     

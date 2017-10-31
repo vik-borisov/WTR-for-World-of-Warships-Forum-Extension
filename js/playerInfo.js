@@ -6,7 +6,7 @@ var loadPlayer = function(playerName, callback){
 
     var cachedPlayer = getPlayerFromCache(playerName);
 
-    if (cachedPlayer){
+    if (cachedPlayer && !forceCacheUpdate(cachedPlayer)){
         processPlayer(cachedPlayer, callback)
         return;
     }
@@ -84,5 +84,6 @@ var getPlayerFromCache = function(playerName){
 }
 
 var setPlayerToCache = function(playerName, player){
+    player.version = variables.version;
     localStorage.setItem(playerKey + playerName, JSON.stringify(player));
 }

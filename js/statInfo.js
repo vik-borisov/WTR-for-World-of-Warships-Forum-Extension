@@ -4,7 +4,13 @@ var fillStatistic = function(contentMap, playerId){
     statLoadBeginTime = new Date().getTime()
 
     var cachedStat = getStatFromCache(playerId);
-    if (cachedStat && cachedStat.raiting && cachedStat.actualDate){
+    if (cachedStat && 
+        cachedStat.actualDate && 
+        !forceCacheUpdate(cachedStat) &&
+        cachedStat.overall &&
+        cachedStat.overall.player &&
+        cachedStat.overall.player.ratings) {
+
         var timeDiff = Math.abs(new Date().getTime() - new Date(cachedStat.actualDate).getTime());
         var updateTime = Math.ceil(timeDiff / (1000 * 3600 * 24 * 3));
         if (updateTime > 1){
@@ -17,6 +23,12 @@ var fillStatistic = function(contentMap, playerId){
     else{
         loadStatistics(playerId, function(statFromServer){ processStatistics(contentMap, statFromServer)});
     }
+}
+
+var colorizeWinrate = function(winrate, serverWinrate){
+    if (winrate < serverWinrate)
+        return "red";
+    return "green";
 }
 
 var colorizeRaiting = function(raiting){
@@ -59,19 +71,33 @@ var colorizeRaiting = function(raiting){
 }
 
 var processStatistics = function(contentMap, stat){
-   if (stat.ratings && stat.ratings.ShipRatings){
-    var raiting = stat.ratings.ShipRatings.warships_today_rating;
-    
+   if (!stat.overall.player || !stat.overall.player.ratings || !stat.overall.player.ratings.ShipRatings){
+       return;
+   }
+
+    var raiting = stat.overall.player.ratings.ShipRatings.warships_today_rating;
+    var winratePlayer = Math.round((stat.overall.player.statistics.ShipCalculableStatistics.wins / stat.overall.player.statistics.ShipCalculableStatistics.battles) * 100);
+    var winrateServer = Math.round((stat.overall.server.statistics.ShipCalculableStatistics.wins / stat.overall.server.statistics.ShipCalculableStatistics.battles) * 100);
+
     var playerContent = contentMap[stat.name];
     for(var i = 0; i < playerContent.length; i++){
-        playerContent[i].parentElement.style.color = colorizeRaiting(raiting);
+        var head = $("<H3 class='ipsComment_author'></H3>");
+        
+        var wr = $("<strong>WR: " + winratePlayer + "%</strong>   ")[0];
+        wr.style.color = colorizeWinrate(winratePlayer, winrateServer);
+        wr.style.paddingRight = "5px";
+        
+        var wtr = $("<strong>WTR: " + Math.round(raiting) + "</strong>")[0];
+        wtr.style.color = colorizeRaiting(raiting);
+
+        head.append(wr);
+        head.append(wtr);
+        head.insertAfter($(playerContent[i]).parent().parent());
     }
 
     ga('send', 'timing', "stat", "load", new Date().getTime() - statLoadBeginTime);
-   }
-
-   
 }
+
 const statKey = "stat_";
 
 var getStatFromCache = function(playerId){
@@ -79,6 +105,7 @@ var getStatFromCache = function(playerId){
 }
 
 var setStatToCache = function(playerId, stat){
+    stat.version = variables.version;
     localStorage.setItem(statKey + playerId, JSON.stringify(stat));
 }
 
@@ -90,14 +117,16 @@ var loadStatistics = function(playerId, callback){
         type: "GET",
         url: "https://api.ru.warships.today/api/player/" + playerId + "/current",
         success: function(response){
-            var stat = {};
+            var stat = {
+                overall: {}                
+            };
+
             if (response.intervals.length != 0 && 
                 response.intervals[response.intervals.length - 1].subResultViews &&
-                response.intervals[response.intervals.length - 1].subResultViews.pvp &&
-                response.intervals[response.intervals.length - 1].subResultViews.pvp.overall &&
-                response.intervals[response.intervals.length - 1].subResultViews.pvp.overall.player){
+                response.intervals[response.intervals.length - 1].subResultViews.pvp){
 
-                stat = response.intervals[response.intervals.length - 1].subResultViews.pvp.overall.player.value;
+                stat.overall.player = response.intervals[response.intervals.length - 1].subResultViews.pvp.overall.player.value;
+                stat.overall.server = response.intervals[response.intervals.length - 1].subResultViews.pvp.overall.server.value;
                 stat.name = response.name;
             }
 

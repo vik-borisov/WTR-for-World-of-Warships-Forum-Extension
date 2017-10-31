@@ -1,6 +1,6 @@
 {
   "name": "WTR for World of Warships Forum",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "manifest_version": 2,
   "description": "Colors players' nicknames based on their WRT ranking. Displays the name of the clan of the player",
   "icons": {
@@ -9,7 +9,8 @@
     "128": "icons/icon128.png"
   },
 "settings":{
-  "remoteCache": ""
+  "remoteCache": "",
+  "minimalCacheVersion": "0.0.10"
 },
 "content_scripts": [{
     "matches": [

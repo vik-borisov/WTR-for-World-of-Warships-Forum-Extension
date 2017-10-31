@@ -4,7 +4,7 @@ var fillClan = function(contentMap, playerId){
     clanLoadBeginTime = new Date().getTime()
     
     var cachedClan = getClanFromCache(playerId);
-    if (cachedClan && cachedClan.raiting && cachedClan.actualDate){
+    if (cachedClan && cachedClan.ratings && cachedClan.actualDate && !forceCacheUpdate(cachedClan)){
         var timeDiff = Math.abs(new Date().getTime() - new Date(cachedClan.actualDate).getTime());
         var updateTime = Math.ceil(timeDiff / (1000 * 3600 * 24 * 7));
         if (updateTime > 1){
@@ -25,7 +25,10 @@ var processClan = function(contentMap, clanInfo){
     }
      var playerContent = contentMap[clanInfo.account_name];
      for(var i = 0; i < playerContent.length; i++){
-        $(playerContent[i]).html("[" + clanInfo.clan.tag + "]<br>" + clanInfo.account_name);
+        var head = $("<H2 class='cAuthorPane_author'>[" + clanInfo.clan.tag + "]</H2>");
+        head[0].style.margin = "3px";
+
+        head.insertBefore($(playerContent[i]).parent().parent());
      }
  }
 
@@ -59,6 +62,12 @@ var getClanFromCache = function(playerId){
     return JSON.parse(localStorage.getItem(clanKey + playerId))
 }
 
-var setClanToCache = function(playerName, clain){
-    localStorage.setItem(clanKey + playerName, JSON.stringify(clain));
+var setClanToCache = function(playerName, clan){
+    if (!clan){
+        clan = {};
+    }
+
+    clan.version = variables.version;
+
+    localStorage.setItem(clanKey + playerName, JSON.stringify(clan));
 }
