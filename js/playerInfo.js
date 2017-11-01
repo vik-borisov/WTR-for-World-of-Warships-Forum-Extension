@@ -67,7 +67,7 @@ var processPlayerFromServer = function(playerName, data, callback){
 var loadFromServer = function(playerName){
     return $.ajax({
         type: "GET",
-        url: "https://api.ru.warships.today/api/players/search-by-name/" + playerName,
+        url: "https://api." + variables.realmWT + ".warships.today/api/players/search-by-name/" + playerName,
         error: function(error){
             ga('send', 'exception', {
                 'exDescription': "loadPlayerFromServer - " + playerName,

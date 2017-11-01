@@ -1,6 +1,6 @@
 {
   "name": "WTR for World of Warships Forum",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "manifest_version": 2,
   "description": "Colors players' nicknames based on their WRT ranking. Displays the name of the clan of the player",
   "icons": {
@@ -14,7 +14,10 @@
 },
 "content_scripts": [{
     "matches": [
-      "*://*.forum.worldofwarships.ru/topic/*"
+      "*://*.forum.worldofwarships.ru/topic/*", 
+      "*://*.forum.worldofwarships.eu/topic/*", 
+      "*://*.forum.worldofwarships.com/topic/*", 
+      "*://*.forum.worldofwarships.asia/topic/*"
     ],
     "js": [
       "js/jquery-3.2.1.min.js", 
@@ -29,6 +32,9 @@
   }],
   "permissions": [
     "*://*.forum.worldofwarships.ru/topic/*", 
+    "*://*.forum.worldofwarships.eu/topic/*", 
+    "*://*.forum.worldofwarships.com/topic/*", 
+    "*://*.forum.worldofwarships.asia/topic/*", 
     "*://*.warships.today/*", 
     "https://www.google-analytics.com/*", 
     "https://api.worldofwarships.ru/wows/*",

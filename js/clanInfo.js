@@ -4,7 +4,7 @@ var fillClan = function(contentMap, playerId){
     clanLoadBeginTime = new Date().getTime()
     
     var cachedClan = getClanFromCache(playerId);
-    if (cachedClan && cachedClan.ratings && cachedClan.actualDate && !forceCacheUpdate(cachedClan)){
+    if (cachedClan  && cachedClan.actualDate && !forceCacheUpdate(cachedClan)){
         var timeDiff = Math.abs(new Date().getTime() - new Date(cachedClan.actualDate).getTime());
         var updateTime = Math.ceil(timeDiff / (1000 * 3600 * 24 * 7));
         if (updateTime > 1){
@@ -37,10 +37,10 @@ var processClan = function(contentMap, clanInfo){
 
     $.ajax({
         type: "GET",
-        url: "https://api.worldofwarships.ru/wows/clans/accountinfo/?application_id=b074904177e1aa2e364e3ac1eca7ee1c&extra=clan&account_id=" + playerId,
+        url: "https://api.worldofwarships." + variables.realmWG + "/wows/clans/accountinfo/?application_id=b074904177e1aa2e364e3ac1eca7ee1c&extra=clan&account_id=" + playerId,
         success: function(response){
             var clan = response.data[playerId];
-
+            
             setClanToCache(playerId, clan);
             callback(clan);
 
@@ -68,6 +68,7 @@ var setClanToCache = function(playerName, clan){
     }
 
     clan.version = variables.version;
+    clan.actualDate = new Date().getTime();
 
     localStorage.setItem(clanKey + playerName, JSON.stringify(clan));
 }

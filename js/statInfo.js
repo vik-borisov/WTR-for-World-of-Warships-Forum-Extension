@@ -105,7 +105,13 @@ var getStatFromCache = function(playerId){
 }
 
 var setStatToCache = function(playerId, stat){
+    if (!stat){
+        stat = {};
+    }
+
+    stat.playerId = playerId;
     stat.version = variables.version;
+    stat.actualDate = new Date().getTime();
     localStorage.setItem(statKey + playerId, JSON.stringify(stat));
 }
 
@@ -115,7 +121,7 @@ var loadStatistics = function(playerId, callback){
 
     $.ajax({
         type: "GET",
-        url: "https://api.ru.warships.today/api/player/" + playerId + "/current",
+        url: "https://api." + variables.realmWT + ".warships.today/api/player/" + playerId + "/current",
         success: function(response){
             var stat = {
                 overall: {}                
@@ -130,8 +136,6 @@ var loadStatistics = function(playerId, callback){
                 stat.name = response.name;
             }
 
-            stat.actualDate = new Date().getTime();
-            stat.playerId = playerId;
 
             setStatToCache(playerId, stat);
             callback(stat);

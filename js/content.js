@@ -1,5 +1,10 @@
 ga('create', 'UA-108484251-1', 'auto');
 
+var getRealm = function(){
+    var host_split = window.location.host.split('.');
+    return host_split[host_split.length - 1];
+}
+
 var getVariables = function(){
     var manifestData;
     if (chrome && chrome.runtime){
@@ -9,19 +14,23 @@ var getVariables = function(){
         manifestData = browser.runtime.getManifest();
     }
 
+    var realm = getRealm();
+
     return{
         version: manifestData.version,
         settings: manifestData.settings,
         minimalCacheVersion: manifestData.minimalCacheVersion,
+        realmWT: realm == 'com' ? 'na': realm,
+        realmWG: realm
     }
 }
 
 var variables = getVariables();
 
-
 var forceCacheUpdate = function(cache){
     return !cache.version || cache.version < variables.minimalCacheVersion;
 }
+
 
 var WOWsExtention = function(){
     
@@ -30,7 +39,7 @@ var WOWsExtention = function(){
     ga('set', 'appVersion', variables.version);
     
     var contentMap = {};
-    var items = $(".cAuthorPane_author a");
+    var items = $(".cAuthorPane_author strong[itemprop='name'] a");
 
     var commentFeed = $('div[data-role="commentFeed"]');
     commentFeed.parent().bind('DOMNodeRemoved', function(e) { 
