@@ -1,5 +1,3 @@
-ga('create', 'UA-108484251-1', 'auto');
-
 var getRealm = function(){
     var host_split = window.location.host.split('.');
     return host_split[host_split.length - 1];
@@ -33,11 +31,6 @@ var forceCacheUpdate = function(cache){
 
 
 var WOWsExtention = function(){
-    
-    ga('send', 'pageview');
-    ga('set', 'appName', window.location.origin);
-    ga('set', 'appVersion', variables.version);
-    
     var contentMap = {};
     var items = $(".cAuthorPane_author strong[itemprop='name'] a");
 

@@ -33,8 +33,6 @@ var processClan = function(contentMap, clanInfo){
  }
 
  var loadClan = function(playerId, callback){
-    ga('send', 'event', 'loadClan', playerId);
-
     $.ajax({
         type: "GET",
         url: "https://api.worldofwarships." + variables.realmWG + "/wows/clans/accountinfo/?application_id=b074904177e1aa2e364e3ac1eca7ee1c&extra=clan&account_id=" + playerId,
@@ -43,14 +41,6 @@ var processClan = function(contentMap, clanInfo){
             
             setClanToCache(playerId, clan);
             callback(clan);
-
-            ga('send', 'timing', "clan", "load", new Date().getTime() - clanLoadBeginTime);
-        },
-        error: function(error){
-            ga('send', 'exception', {
-                'exDescription': "loadClan - " + playerId,
-                'exFatal': false
-              });
         }
     });
 }

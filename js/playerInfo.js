@@ -2,7 +2,6 @@ var playerLoadBeginTime = null;
 
 var loadPlayer = function(playerName, callback){
     playerLoadBeginTime = new Date().getTime()
-    ga('send', 'event', 'loadPlayer', playerName);
 
     var cachedPlayer = getPlayerFromCache(playerName);
 
@@ -17,7 +16,6 @@ var loadPlayer = function(playerName, callback){
 }
 var processPlayer = function(data, callback) {
     callback(data.id);
-    ga('send', 'timing', "player", "load", new Date().getTime() - playerLoadBeginTime);
 }
 
 // var downloadFromRemoteCache = function(playerName, callback){
@@ -33,12 +31,6 @@ var processPlayer = function(data, callback) {
 //                 })
 //             }
 //             processPlayerFromServer(playerName, data, callback);
-//         },
-//         error: function(error){
-//             ga('send', 'exception', {
-//                 'exDescription': "loadPlayerRemoteCache - " + playerName,
-//                 'exFatal': false
-//               });
 //         }
 //     })
 // }
@@ -55,12 +47,6 @@ var processPlayerFromServer = function(playerName, data, callback){
 //         dataType: 'json',
 //         data: JSON.stringify(data),
 //         url: variables.settings.remoteCache + "/cache/player/" + playerName,
-//         error: function(error){
-//             ga('send', 'exception', {
-//                 'exDescription': "setPlayerRemoteCache - " + playerName,
-//                 'exFatal': false
-//               });
-//         }
 //     })
 // }
 
@@ -68,12 +54,6 @@ var loadFromServer = function(playerName){
     return $.ajax({
         type: "GET",
         url: "https://api." + variables.realmWT + ".warships.today/api/players/search-by-name/" + playerName,
-        error: function(error){
-            ga('send', 'exception', {
-                'exDescription': "loadPlayerFromServer - " + playerName,
-                'exFatal': false
-              });
-        }
     })
 }
 

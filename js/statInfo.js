@@ -94,8 +94,6 @@ var processStatistics = function(contentMap, stat){
         head.append(wtr);
         head.insertAfter($(playerContent[i]).parent().parent());
     }
-
-    ga('send', 'timing', "stat", "load", new Date().getTime() - statLoadBeginTime);
 }
 
 const statKey = "stat_";
@@ -117,8 +115,6 @@ var setStatToCache = function(playerId, stat){
 
 
 var loadStatistics = function(playerId, callback){
-    ga('send', 'event', 'loadStat', playerId);
-
     $.ajax({
         type: "GET",
         url: "https://api." + variables.realmWT + ".warships.today/api/player/" + playerId + "/current",
@@ -139,12 +135,6 @@ var loadStatistics = function(playerId, callback){
 
             setStatToCache(playerId, stat);
             callback(stat);
-        },
-        error: function(error){
-            ga('send', 'exception', {
-                'exDescription': "loadStat - " + playerId,
-                'exFatal': false
-              });
         }
     });
 }
