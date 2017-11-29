@@ -8,6 +8,9 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
+  "browser_action": {
+    "default_popup" : "background/popup.html"
+  },
 "settings":{
   "remoteCache": "",
   "minimalCacheVersion": "0.0.10"
@@ -20,16 +23,17 @@
       "*://*.forum.worldofwarships.asia/topic/*"
     ],
     "js": [
-      "js/jquery-3.2.1.min.js", 
-      "js/playerInfo.js",
-      "js/statInfo.js",
-      "js/clanInfo.js",
-      "js/content.js"
+      "js/zepto.min.js", 
+      "content/playerInfo.js",
+      "content/WTR.js",
+      "content/clanInfo.js",
+      "content/content.js"
     ],
     "run_at": "document_end",
     "all_frames": true
   }],
   "permissions": [
+    "storage",
     "*://*.forum.worldofwarships.ru/topic/*", 
     "*://*.forum.worldofwarships.eu/topic/*", 
     "*://*.forum.worldofwarships.com/topic/*", 

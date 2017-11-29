@@ -25,16 +25,18 @@ var processClan = function(contentMap, clanInfo){
     }
      var playerContent = contentMap[clanInfo.account_name];
      for(var i = 0; i < playerContent.length; i++){
-        var head = $("<H2 class='cAuthorPane_author'>[" + clanInfo.clan.tag + "]</H2>");
+        var head = Zepto("<H2 class='cAuthorPane_author'>[" + clanInfo.clan.tag + "]</H2>");
         head[0].style.margin = "3px";
 
-        head.insertBefore($(playerContent[i]).parent().parent());
+        head.insertBefore(Zepto(playerContent[i]).parent().parent());
      }
  }
 
  var loadClan = function(playerId, callback){
-    $.ajax({
+    Zepto.ajax({
         type: "GET",
+        crossDomain: true,
+        global: false,
         url: "https://api.worldofwarships." + variables.realmWG + "/wows/clans/accountinfo/?application_id=b074904177e1aa2e364e3ac1eca7ee1c&extra=clan&account_id=" + playerId,
         success: function(response){
             var clan = response.data[playerId];

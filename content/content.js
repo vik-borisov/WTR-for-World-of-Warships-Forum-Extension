@@ -30,11 +30,11 @@ var forceCacheUpdate = function(cache){
 }
 
 
-var WOWsExtention = function(){
+var ForumExtention = function(raitingType){
     var contentMap = {};
-    var items = $(".cAuthorPane_author strong[itemprop='name'] a");
+    var items = Zepto(".cAuthorPane_author strong[itemprop='name'] a");
 
-    var commentFeed = $('div[data-role="commentFeed"]');
+    var commentFeed = Zepto('div[data-role="commentFeed"]');
     commentFeed.parent().bind('DOMNodeRemoved', function(e) { 
         if (e.target == commentFeed[0]){
             window.setTimeout(WOWsExtention, 1000);
@@ -50,15 +50,21 @@ var WOWsExtention = function(){
         }
     })
 
+    var fillStatistic = raitingType && raitingType == "ProAlfa" ?  null : WTR;
+
     var playerStatistics = {};
     for(var playerName in contentMap) {
         loadPlayer(playerName, function(playerId){
-            fillStatistic(contentMap, playerId)
+            if (fillStatistic){
+                fillStatistic(contentMap, playerId)
+            }
+
             fillClan(contentMap, playerId)
         });
     }
 }
 
 
-
-WOWsExtention();
+chrome.storage.sync.get('raitingType', function(settings) {
+    ForumExtention(settings.raitingType);
+});

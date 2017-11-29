@@ -10,7 +10,7 @@ var loadPlayer = function(playerName, callback){
         return;
     }
 
-    loadFromServer(playerName).done(function(data){
+    loadFromServer(playerName, function(data){
         processPlayerFromServer(playerName, data, callback);
     })
 }
@@ -19,7 +19,7 @@ var processPlayer = function(data, callback) {
 }
 
 // var downloadFromRemoteCache = function(playerName, callback){
-//     $.ajax({
+//     Zepto.ajax({
 //         type: "GET",
 //         url: variables.settings.remoteCache + "/cache/player/" + playerName,
 //         success: function(data){
@@ -42,7 +42,7 @@ var processPlayerFromServer = function(playerName, data, callback){
 }
 
 // var uploadToRemoteCache = function(playerName, data){
-//     return $.ajax({
+//     return Zepto.ajax({
 //         type: "POST",
 //         dataType: 'json',
 //         data: JSON.stringify(data),
@@ -50,9 +50,12 @@ var processPlayerFromServer = function(playerName, data, callback){
 //     })
 // }
 
-var loadFromServer = function(playerName){
-    return $.ajax({
+var loadFromServer = function(playerName, callback){
+    return Zepto.ajax({
         type: "GET",
+        crossDomain: true,
+        global: false,
+        success: callback,
         url: "https://api." + variables.realmWT + ".warships.today/api/players/search-by-name/" + playerName,
     })
 }
