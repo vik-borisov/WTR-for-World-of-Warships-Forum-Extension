@@ -50,17 +50,15 @@ var ForumExtention = function(raitingType){
         }
     })
 
-    var fillStatistic = raitingType && raitingType == "ProAlfa" ?  null : WTR;
-
-    var playerStatistics = {};
-    for(var playerName in contentMap) {
-        loadPlayer(playerName, function(playerId){
-            if (fillStatistic){
-                fillStatistic(contentMap, playerId)
-            }
-
-            fillClan(contentMap, playerId)
-        });
+    switch (raitingType){
+        case "ProAlfa": 
+            ProAlfa(contentMap);
+        break;
+        case "WTR": 
+        case null: 
+        case undefined: 
+            WTR(contentMap);
+        break;
     }
 }
 
