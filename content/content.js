@@ -37,7 +37,7 @@ var ForumExtention = function(raitingType){
     var commentFeed = Zepto('div[data-role="commentFeed"]');
     commentFeed.parent().bind('DOMNodeRemoved', function(e) { 
         if (e.target == commentFeed[0]){
-            window.setTimeout(WOWsExtention, 1000);
+            window.setTimeout(ForumExtention, 1000);
         }
     });
         
