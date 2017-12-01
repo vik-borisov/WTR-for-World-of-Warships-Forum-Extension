@@ -1,6 +1,6 @@
 {
   "name": "WTR for World of Warships Forum",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "manifest_version": 2,
   "description": "Colors players' nicknames based on their WRT or ProAlfa ranking. Displays the name of the clan of the player",
   "icons": {
@@ -50,7 +50,7 @@
     "*://*.forum.worldofwarships.com/topic/*", 
     "*://*.forum.worldofwarships.asia/topic/*", 
     "*://*.warships.today/*", 
-    "https://cors.io/*",
+    "https://forumwtr.warships.win/*",
     "https://api.worldofwarships.ru/wows/*",
     "https://api.worldofwarships.eu/wows/*",
     "https://api.worldofwarships.com/wows/*",

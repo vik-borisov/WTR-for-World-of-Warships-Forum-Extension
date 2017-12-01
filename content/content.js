@@ -52,11 +52,11 @@ var ForumExtention = function(raitingType){
 
     switch (raitingType){
         case "ProAlfa": 
+        case null: 
+        case undefined: 
             ProAlfa(contentMap);
         break;
         case "WTR": 
-        case null: 
-        case undefined: 
             WTR(contentMap);
         break;
     }

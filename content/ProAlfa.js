@@ -6,9 +6,8 @@ var ProAlfa = function(contentMap)
         type: "GET",
         crossDomain: true,
         global: false,
-        url: "https://cors.io/?http://proships.ru/stat/api.php?nicks=" + players ,
-        success: function(response) {
-            var data = JSON.parse(response);
+        url: "https://forumwtr.warships.win/http://proships.ru/stat/api.php?nicks=" + players ,
+        success: function(data) {
             for (const stat of data.data){
                 processStatistics(contentMap, stat)
                 processClan(contentMap, stat)
@@ -27,21 +26,72 @@ var ProAlfa = function(contentMap)
         var head = Zepto("<H3 class='ipsComment_author'></H3>");
 
         var wr = Zepto("<strong>WR: " + stat.wins_percent + "%</strong>   ")[0];
-        // wr.style.color = colorizeWinrate(winratePlayer, winrateServer);
+        wr.style.color = colorizeWinrate(stat.wins_percent);
         wr.style.paddingRight = "5px";
 
-        var wtr = Zepto("<strong>Alfa: " + Math.round(stat.all_rate) + "</strong>")[0];
-        // wtr.style.color = colorizeRaiting(raiting);
+        var alfa = Zepto("<strong>ALFA: " + Math.round(stat.all_rate) + "</strong>")[0];
+        alfa.style.color = colorizeAlfa(stat.all_rate);
 
         head.append(wr);
-        head.append(wtr);
+        head.append(alfa);
         head.insertAfter(
             Zepto(playerContent[i])
             .parent()
             .parent()
         );
         }
-    };
+    }; 
+    var colorizeWinrate = function(winrate){
+        if (winrate < 0) return "black";
+
+        if (winrate < 44.81) {
+        return "#C6282E";
+        }
+
+        if (winrate < 48.92) {
+        return "#FFAA00";
+        }
+
+        if (winrate < 54.31) {
+        return "#44AA22";
+        }
+
+        if (winrate < 56.85) {
+        return "#2E7D32";
+        }
+
+        if (winrate < 61.76) {
+        return "#00ACC1";
+        }
+
+        return "#8E24AA";
+    }
+
+    var colorizeAlfa = function(alfa){
+        if (alfa < 0) return "black";
+
+        if (alfa < 718) {
+        return "#C6282E";
+        }
+
+        if (alfa < 928) {
+        return "#FFAA00";
+        }
+
+        if (alfa < 1026 ) {
+        return "#44AA22";
+        }
+
+        if (alfa < 1026 ) {
+        return "#2E7D32";
+        }
+
+        if (alfa < 1330) {
+        return "#00ACC1";
+        }
+
+        return "#8E24AA";
+    }
 
     var processClan = function(contentMap, stat){
         if (stat.clan_id <= 0){
