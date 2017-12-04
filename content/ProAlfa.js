@@ -4,8 +4,11 @@ var ProAlfa = function(contentMap)
 
     Zepto.ajax({
         type: "GET",
-        crossDomain: true,
+        crossDomain:false,
         global: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        },
         url: "https://forumwtr.warships.win/http://proships.ru/stat/api.php?nicks=" + players ,
         success: function(data) {
             for (const stat of data.data){

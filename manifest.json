@@ -1,6 +1,6 @@
 {
   "name": "WTR for World of Warships Forum",
-  "version": "0.0.18",
+  "version": "0.1.0",
   "manifest_version": 2,
   "description": "Colors players' nicknames based on their WRT or ProAlfa ranking. Displays the name of the clan of the player",
   "icons": {
