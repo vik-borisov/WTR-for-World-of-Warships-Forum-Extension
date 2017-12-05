@@ -26,7 +26,7 @@ var ProAlfa = function(contentMap)
 
         var playerContent = contentMap[stat.name];
         for (var i = 0; i < playerContent.length; i++) {
-        var head = Zepto("<H3 class='ipsComment_author'><a></H3>");
+        var head = Zepto("<H4 class='ipsComment_author'><a></H4>");
         var link = Zepto("<a href='http://proships.ru/stat/user/" + stat.name +"' target='_blank'></a>");
         
         var wr = Zepto("<strong>WR: " + stat.wins_percent + "%</strong>   ")[0];
