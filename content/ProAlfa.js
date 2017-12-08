@@ -87,11 +87,11 @@ var ProAlfa = function(contentMap)
         return "#44AA22";
         }
 
-        if (alfa < 1026 ) {
+        if (alfa < 1330 ) {
         return "#2E7D32";
         }
 
-        if (alfa < 1330) {
+        if (alfa < 1772) {
         return "#00ACC1";
         }
 
