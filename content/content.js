@@ -32,7 +32,7 @@ var forceCacheUpdate = function(cache){
 
 var ForumExtention = function(raitingType){
     var contentMap = {};
-    var items = Zepto(".cAuthorPane_author strong[itemprop='name'] a");
+    var items = Zepto(".cAuthorPane_author strong a");
 
     var commentFeed = Zepto('div[data-role="commentFeed"]');
     commentFeed.parent().bind('DOMNodeRemoved', function(e) { 

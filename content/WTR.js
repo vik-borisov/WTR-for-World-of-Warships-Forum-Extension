@@ -99,7 +99,7 @@ var WTR = function(contentMap) {
 
       var playerContent = contentMap[stat.name];
       for (var i = 0; i < playerContent.length; i++) {
-        var head = Zepto("<H3 class='ipsComment_author'></H3>");
+        var head = Zepto("<H4 class='ipsComment_author'></H4>");
 
         var wr = Zepto("<strong>WR: " + winratePlayer + "%</strong>   ")[0];
         wr.style.color = colorizeWinrate(winratePlayer, winrateServer);
@@ -186,37 +186,11 @@ var WTR = function(contentMap) {
         callback(data.id);
     }
     
-    // var downloadFromRemoteCache = function(playerName, callback){
-    //     Zepto.ajax({
-    //         type: "GET",
-    //         url: variables.settings.remoteCache + "/cache/player/" + playerName,
-    //         success: function(data){
-    //             if (!data){
-    //                 loadFromServer(playerName).done(function(data){
-    //                     uploadToRemoteCache(playerName, data).done(function(){
-    //                         processPlayerFromServer(playerName, data, callback);
-    //                     })
-    //                 })
-    //             }
-    //             processPlayerFromServer(playerName, data, callback);
-    //         }
-    //     })
-    // }
-    
     var processPlayerFromServer = function(playerName, data, callback){
         setPlayerToCache(playerName, data);
         var cachedPlayer = getPlayerFromCache(playerName);
         processPlayer(cachedPlayer, callback)
     }
-    
-    // var uploadToRemoteCache = function(playerName, data){
-    //     return Zepto.ajax({
-    //         type: "POST",
-    //         dataType: 'json',
-    //         data: JSON.stringify(data),
-    //         url: variables.settings.remoteCache + "/cache/player/" + playerName,
-    //     })
-    // }
     
     var loadFromServer = function(playerName, callback){
         return Zepto.ajax({
