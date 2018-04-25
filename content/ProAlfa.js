@@ -26,19 +26,25 @@ var ProAlfa = function(contentMap)
 
         var playerContent = contentMap[stat.name];
         for (var i = 0; i < playerContent.length; i++) {
-        var head = Zepto("<H4 class='ipsComment_author'><a></H4>");
-        var link = Zepto("<a href='http://proships.ru/stat/user/" + stat.name +"' target='_blank'></a>");
-        
-        var wr = Zepto("<strong>WR: " + stat.wins_percent + "%</strong>   ")[0];
-        wr.style.color = colorizeWinrate(stat.wins_percent);
-        wr.style.paddingRight = "5px";
+        var head = Zepto("<H4 class='ipsComment_author'></H4>");
+        if (!stat.isHidden) {
+            var link = Zepto("<a href='http://proships.ru/stat/user/" + stat.name +"' target='_blank'></a>");
+            
+            var wr = Zepto("<strong>WR: " + stat.wins_percent + "%</strong>   ")[0];
+            wr.style.color = colorizeWinrate(stat.wins_percent);
+            wr.style.paddingRight = "5px";
 
-        var alfa = Zepto("<strong>ALFA: " + Math.round(stat.all_rate) + "</strong>")[0];
-        alfa.style.color = colorizeAlfa(stat.all_rate);
+            var alfa = Zepto("<strong>ALFA: " + Math.round(stat.all_rate) + "</strong>")[0];
+            alfa.style.color = colorizeAlfa(stat.all_rate);
+            
+            link.append(wr);
+            link.append(alfa);
+            head.append(link);
+        } else {
+            var span = Zepto("<span style='color:grey'>[Statistics are hidden]</span>")
+            head.append(span);
+        }
 
-        link.append(wr);
-        link.append(alfa);
-        head.append(link);
         head.insertAfter(
             Zepto(playerContent[i])
             .parent()
@@ -47,8 +53,6 @@ var ProAlfa = function(contentMap)
         }
     }; 
     var colorizeWinrate = function(winrate){
-        if (winrate < 0) return "black";
-
         if (winrate < 44.81) {
         return "#C6282E";
         }
@@ -73,8 +77,6 @@ var ProAlfa = function(contentMap)
     }
 
     var colorizeAlfa = function(alfa){
-        if (alfa < 0) return "black";
-
         if (alfa < 718) {
         return "#C6282E";
         }
@@ -104,10 +106,18 @@ var ProAlfa = function(contentMap)
         }
          var playerContent = contentMap[stat.name];
          for(var i = 0; i < playerContent.length; i++){
-            var head = Zepto("<H2 class='cAuthorPane_author'><a href='http://proships.ru/stat/clan/" + stat.clan_tag +"' target='_blank'>[" + stat.clan_tag + "]</a></H2>");
+            var clanTag = Zepto(".cAuthorPane_clan", Zepto(playerContent[i]).offsetParent());
+
+            var a = Zepto("<a href='http://proships.ru/stat/clan/" + stat.clan_tag +"' target='_blank'>[" + stat.clan_tag + "]</a>")
+            a.attr("style", clanTag.attr("style"));
+            
+            var head = Zepto("<H2 class='cAuthorPane_author'></H2>");
             head[0].style.margin = "3px";
-    
+
+            head.append(a);
             head.insertBefore(Zepto(playerContent[i]).parent().parent());
+
+            clanTag.remove();
          }
      }
     

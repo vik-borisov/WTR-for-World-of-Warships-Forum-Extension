@@ -244,10 +244,15 @@ var WTR = function(contentMap) {
         }
          var playerContent = contentMap[clanInfo.account_name];
          for(var i = 0; i < playerContent.length; i++){
+            var clanTag = Zepto(".cAuthorPane_clan", Zepto(playerContent[i]).offsetParent());
+
             var head = Zepto("<H2 class='cAuthorPane_author'>[" + clanInfo.clan.tag + "]</H2>");
+            head.attr("style", clanTag.attr("style"));
             head[0].style.margin = "3px";
-    
+
             head.insertBefore(Zepto(playerContent[i]).parent().parent());
+
+            clanTag.remove();
          }
      }
     
@@ -265,7 +270,6 @@ var WTR = function(contentMap) {
             }
         });
     }
-    
     
     const clanKey = "clan_";
     

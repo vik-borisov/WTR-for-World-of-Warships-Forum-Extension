@@ -62,7 +62,6 @@ var ForumExtention = function(raitingType){
     }
 }
 
-
 chrome.storage.sync.get('raitingType', function(settings) {
     ForumExtention(settings.raitingType);
 });
